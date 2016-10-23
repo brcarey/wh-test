@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
+using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 
@@ -17,9 +19,10 @@ namespace WH.BetEvaluator.Services
             _csvReader = new CsvReader(sourceReader, config);
         }
 
-        public IEnumerable<BetRow> Read()
+        public IReadOnlyList<BetRow> Read()
         {
-            return _csvReader.GetRecords<BetRow>();
+            var rows = _csvReader.GetRecords<BetRow>();
+            return new ReadOnlyCollection<BetRow>(rows.ToList());
         }
 
         public void Dispose()
