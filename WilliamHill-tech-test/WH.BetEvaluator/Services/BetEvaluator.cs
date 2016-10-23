@@ -14,7 +14,7 @@ namespace WH.BetEvaluator.Services
 
         public IEnumerable<Result> Evaluate(IReadOnlyList<BetRow> settledBets, IReadOnlyList<BetRow> unsettledBets)
         {
-            return Enumerable.Empty<Result>();
+            return _riskStrategies.SelectMany(strategy => strategy.Evaluate(settledBets, unsettledBets));
         }
     }
 }
