@@ -58,11 +58,16 @@
     <Compile Include="Services\BetRow.cs" />
     <Compile Include="Services\IRiskStrategy.cs" />
     <Compile Include="Services\Result.cs" />
+    <Compile Include="Services\Strategies\StakeUnusuallyHigh.cs" />
+    <Compile Include="Services\Strategies\WinPercentageTooHigh.cs" />
+    <Compile Include="Services\Strategies\WinAmountOverThreshold.cs" />
+    <Compile Include="Services\Strategies\WinRateOverThreshold.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
