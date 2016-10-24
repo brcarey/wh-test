@@ -23,8 +23,9 @@ namespace WH.BetEvaluator.Services.Strategies
                 .Where(x => averageStakeByCustomer.ContainsKey(x.CustomerId) && x.Stake > (averageStakeByCustomer[x.CustomerId] * _stakeThresholdFactor))
                 .Select(x => new Result
                 {
-                    IsFlagged = true,
                     Level = RiskLevel.Major,
+                    CustomerId = x.CustomerId,
+                    EventId = x.EventId,
                     Message = $"Customer {x.CustomerId} stake for event {x.EventId} is over their average stake by a factor of {_stakeThresholdFactor}"
                 });
         }

@@ -18,8 +18,8 @@ namespace WH.BetEvaluator.Services.Strategies
                 .Where(x => (x.Count(z => z.Win > 0) / x.Count() * 100) > _winPercentageThreshold)
                 .Select(x => new Result
                 {
-                    IsFlagged = true,
                     Level = RiskLevel.Major,
+                    CustomerId = x.Key,
                     Message = $"Customer {x.Key} win percentage is over threshold of {_winPercentageThreshold}%"
                 });
         }

@@ -2,9 +2,10 @@
 {
     public class Result
     {
-        public bool IsFlagged { get; set; }
         public string Message { get; set; }
         public RiskLevel Level { get; set; }
+        public string CustomerId { get; set; }
+        public string EventId { get; set; }
     }
 
     public enum RiskLevel

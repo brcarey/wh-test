@@ -18,8 +18,9 @@ namespace WH.BetEvaluator.Services.Strategies
                 .Where(x => x.Win > _winAmountThreshold)
                 .Select(x => new Result
                 {
-                    IsFlagged = true,
                     Level = RiskLevel.Minor,
+                    CustomerId = x.CustomerId,
+                    EventId = x.EventId,
                     Message = $"Customer {x.CustomerId} win amount for event {x.EventId} is over threshold of ${_winAmountThreshold}"
                 });
         }
