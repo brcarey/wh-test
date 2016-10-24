@@ -16,23 +16,25 @@ namespace WH.BetEvaluator
                 Console.WriteLine("Usage: WH.BetEvaluator.exe <settled bets path> <unsettled bets path>");
                 return;
             }
-            
-            var settledBetsReader = new BetReader(new StreamReader(args[0]));
-            var unsettledBetsReader = new BetReader(new StreamReader(args[1]));
 
-            var strategies = new IRiskStrategy[]
+            using (var settledBetsReader = new BetReader(new StreamReader(args[0])))
+            using (var unsettledBetsReader = new BetReader(new StreamReader(args[1])))
             {
-                new WinPercentageTooHigh(),
-                new StakeUnusuallyHigh(10), 
-                new StakeUnusuallyHigh(30), 
-                new WinAmountOverThreshold(),                
-                new WinRateOverThreshold(50)
-            };
 
-            var evaluator = new Services.BetEvaluator(strategies);
-            var results = evaluator.Evaluate(settledBetsReader.Read(), unsettledBetsReader.Read());
+                var strategies = new IRiskStrategy[]
+                {
+                    new WinPercentageTooHigh(),
+                    new StakeUnusuallyHigh(10),
+                    new StakeUnusuallyHigh(30),
+                    new WinAmountOverThreshold(),
+                    new WinRateOverThreshold(50)
+                };
 
-            Console.Write(GetResultFormatter().Export(results));
+                var evaluator = new Services.BetEvaluator(strategies);
+                var results = evaluator.Evaluate(settledBetsReader.Read(), unsettledBetsReader.Read());
+
+                Console.Write(GetResultFormatter().Export(results));
+            }
 
             Console.WriteLine();
             Console.WriteLine("Press any key to quit");
