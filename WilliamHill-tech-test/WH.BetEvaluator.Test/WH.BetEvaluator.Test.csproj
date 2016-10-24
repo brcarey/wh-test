@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="BetReaderTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StakeUnusuallyHighTests.cs" />
+    <Compile Include="WinAmountOverThresholdTests.cs" />
     <Compile Include="WinPercentageTooHighTests.cs" />
   </ItemGroup>
   <ItemGroup>

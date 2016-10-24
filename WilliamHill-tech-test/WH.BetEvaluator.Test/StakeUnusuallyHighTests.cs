@@ -5,12 +5,12 @@ using WH.BetEvaluator.Services.Strategies;
 
 namespace WH.BetEvaluator.Test
 {
-    public class WinPercentageTooHighTests
+    public class StakeUnusuallyHighTests
     {
         [Test]
-        public void ShouldReturnResultWhenWinPercentageExceeds60Percent()
+        public void ShouldReturnResultWhenStakeExceedsAverageByFactorOf10()
         {
-            var bets = new[]
+            var settledBets = new[]
             {
                 new BetRow {CustomerId = "1", EventId = "1", ParticipantId = "1", Stake = 10, Win = 20},
                 new BetRow {CustomerId = "1", EventId = "2", ParticipantId = "1", Stake = 10, Win = 20},
@@ -24,11 +24,13 @@ namespace WH.BetEvaluator.Test
                 new BetRow {CustomerId = "1", EventId = "10", ParticipantId = "1", Stake = 10, Win = 20},
             };
 
-            var strategy = new WinPercentageTooHigh();
-            var result = strategy.Evaluate(bets, Enumerable.Empty<BetRow>()).ToList();
+            var newBet = new BetRow {CustomerId = "1", EventId = "11", ParticipantId = "1", Stake = 200, Win = 2000};
+
+            var strategy = new StakeUnusuallyHigh(10);
+            var result = strategy.Evaluate(settledBets, new [] { newBet }).ToList();
 
             Assert.That(result.Count, Is.EqualTo(1));
-            Assert.That(result[0].Message, Is.EqualTo("Customer 1 win percentage is over threshold of 60%"));
+            Assert.That(result[0].Message, Is.EqualTo("Customer 1 stake for event 11 is over their average stake by a factor of 10"));
         }
     }
 }
